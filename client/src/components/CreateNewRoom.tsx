@@ -1,11 +1,15 @@
 import { useState } from "react";
-import { Socket, io } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 import { ClientToServerEvents, ServerToClientEvents } from "../../../types";
 function CreateNewRoom() {
   const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io({
     autoConnect: false,
   });
   const [roomName, setRoomName] = useState("");
+  const [roomList, setRoomList] = useState([])
+  socket.on('roomList', (rooms : any) => {
+    setRoomList(rooms)
+  })
   return (
     <div>
       <div className="inputContainer">
@@ -27,6 +31,9 @@ function CreateNewRoom() {
           Skapa Rum
         </button>
       </div>
+      {roomList.length > 0 && roomList.map((index, room) => (
+        <div key={index}>{room}</div>
+      ))}
     </div>
   );
 }

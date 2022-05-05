@@ -1,7 +1,7 @@
 import { Server, Socket } from "socket.io";
-import { ClientToServerEvents, ServerToClientEvents, InterServerEvents, ServerSocketData } from "../types";
+import { ClientToServerEvents, InterServerEvents, ServerSocketData, ServerToClientEvents } from "../types";
+import registerChatHandler from './chatHandler';
 import { getRooms } from "./roomStore";
-import registerChatHandler from './chatHandler'
 
 const io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, ServerSocketData>();
 
@@ -28,7 +28,7 @@ io.on("connection", (socket) => {
   
 });
 
-io.listen(4000);
+io.listen(3000);
 
 
 

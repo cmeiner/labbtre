@@ -11,11 +11,14 @@ const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io({
 
 function WelcomePage() {
   const [nameInput, setNameInput] = useState("");
+  const [navigateBol, setNavigateBol] = useState(true)
   const navigate = useNavigate();
   let checkName = async () => {
     socket.auth = { nickname: nameInput };
-    await socket.connect();
-    navigate("/rooms");
+    socket.on('connect_error', (errorMessage) => {
+      console.log(errorMessage)
+    })
+    navigate('/rooms')
   };
   return (
     <div className="main-div">
